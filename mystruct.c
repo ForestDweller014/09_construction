@@ -5,25 +5,24 @@
 #include "mystruct.h"
 
 struct session *new_session(char *user) {
-	srand(time(NULL));
-	char token[12];
-	int i;
-	for (i = 0; i < 12; i++) {
-		token[i] = (rand() % (62));
-		if (token[i] < 10) {
-			token[i] += 48;
-		} else if (token[i] < 36) {
-			token[i] += 65 - 10;
-		} else {
-			token[i] += 97 - 36;
-		}
-	}
-
 	struct session *ns;
 	ns = malloc(sizeof(struct session));
 
-	strncpy(ns->username, user, sizeof(ns->username) - 1);
-	strncpy(ns->login_token, token, sizeof(ns->login_token) - 1);
+	strncpy(ns->username, user, sizeof(ns->username));
+
+	srand(time(NULL));
+	int i;
+	char *nt = ns->login_token;
+	for (i = 0; i < 256; i++) {
+		*(nt + i) = (rand() % (62));
+		if (*(nt + i) < 10) {
+			*(nt + i) += 48;
+		} else if (*(nt + i) < 36) {
+			*(nt + i) += 65 - 10;
+		} else {
+			*(nt + i) += 97 - 36;
+		}
+	}
 
 	return ns;
 }
