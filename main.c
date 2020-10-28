@@ -1,6 +1,8 @@
 #include "mystruct.h"
 
 int main() {
-	print_session(new_session("ForestDweller"));
+	struct session *curr_struct = new_session("ForestDweller");
+	print_session(curr_struct);
+	free(curr_struct);
 	return 0;
 }
